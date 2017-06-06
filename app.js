@@ -12,6 +12,18 @@ app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/index.html'));
 });
 
+// when u run localhost:8080/display it will display all todos
+app.get('/display',function(req,res){
+  res.sendFile(path.join(__dirname+'/display.html'));
+});
+
+//this route sends the json data for ajax request
+app.get('/data',function(req,res){
+  fs.readFile('./data.json','utf8',function(err,data){
+    res.json(data);
+  });
+});
+
 //when the form is submitted it will get execute
 app.post('/add',function(req,res){
   //checking if the user has entered the data
