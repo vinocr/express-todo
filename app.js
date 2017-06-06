@@ -17,6 +17,21 @@ app.get('/display',function(req,res){
   res.sendFile(path.join(__dirname+'/display.html'));
 });
 
+app.get('/delete/:index',function(req,res){
+  var index = req.params.index;
+  fs.readFile('./data.json','utf8',function(err,data){
+    var todo = JSON.parse(data);
+    var todoArray = [];
+    for (var i = 0; i < todo.length; i++) {
+        if(i!=index){
+          todoArray.push(todo[i]);
+        }
+    }
+    var newArray = JSON.stringify(todoArray);
+    fs.writeFile('./data.json',newArray,'utf8');
+  });
+});
+
 //this route sends the json data for ajax request
 app.get('/data',function(req,res){
   fs.readFile('./data.json','utf8',function(err,data){
@@ -43,7 +58,7 @@ app.post('/add',function(req,res){
       var todoArray = [];
       todoArray.push({
         todo:req.body.todo,
-        createdAt:new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getYear()
+        createdAt:new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear()
       });
       var todo = JSON.stringify(todoArray);
       fs.writeFile('./data.json',todo,'utf8');

@@ -7,14 +7,16 @@
 <div id="display"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-$.ajax({
-  url:"/data",
-  success:function(data){
-    var todos = JSON.parse(data);
-    for (var i = 0; i < todos.length; i++) {
-      $('#display').append(todos[i].todo+"<br>");
+$(document).ready(function(){
+  $.ajax({
+    url:"/data",
+    success:function(data){
+      var todos = JSON.parse(data);
+      for (var i = 0; i < todos.length; i++) {
+        $('#display').append(todos[i].todo+"&nbsp;&nbsp;&nbsp;&nbsp;<a href='/delete/1'>Delete</a><br><br>");
+      }
     }
-  }
+  });
 });
 </script>
 </body>
